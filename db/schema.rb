@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_095733) do
+ActiveRecord::Schema.define(version: 2018_05_16_111948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cards", force: :cascade do |t|
+    t.string "energyCost"
+    t.string "type"
+    t.string "deck"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cards_modifiers", force: :cascade do |t|
+    t.integer "id_Card"
+    t.integer "id_modifier"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "characters", force: :cascade do |t|
     t.integer "hp"
@@ -31,6 +46,14 @@ ActiveRecord::Schema.define(version: 2018_05_16_095733) do
     t.string "appearance"
     t.boolean "isElite"
     t.boolean "isBoss"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "modifiers", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.boolean "isDebuff"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

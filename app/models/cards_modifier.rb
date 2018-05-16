@@ -1,0 +1,2 @@
+class CardsModifier < ApplicationRecord
+end
