@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_14_184932) do
+ActiveRecord::Schema.define(version: 2018_05_16_095733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(version: 2018_05_14_184932) do
     t.integer "gold"
     t.integer "start_relic"
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "enemies", force: :cascade do |t|
+    t.integer "minHP"
+    t.integer "maxHP"
+    t.string "location"
+    t.string "appearance"
+    t.boolean "isElite"
+    t.boolean "isBoss"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
