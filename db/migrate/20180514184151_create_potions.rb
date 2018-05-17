@@ -1,7 +1,6 @@
 class CreatePotions < ActiveRecord::Migration[5.2]
   def change
-    create_table :potions, :id => false do |t|
-      t.primary_key :id
+    create_table :potions do |t|
       t.string :name
       t.text :effect
 

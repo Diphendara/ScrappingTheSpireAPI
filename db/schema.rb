@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_111948) do
+ActiveRecord::Schema.define(version: 2018_05_17_180438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,17 +23,10 @@ ActiveRecord::Schema.define(version: 2018_05_16_111948) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "cards_modifiers", force: :cascade do |t|
-    t.integer "id_Card"
-    t.integer "id_modifier"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "characters", force: :cascade do |t|
     t.integer "hp"
     t.integer "gold"
-    t.integer "start_relic"
+    t.integer "relic_id"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -46,6 +39,13 @@ ActiveRecord::Schema.define(version: 2018_05_16_111948) do
     t.string "appearance"
     t.boolean "isElite"
     t.boolean "isBoss"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "location"
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

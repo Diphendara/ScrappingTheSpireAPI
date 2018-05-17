@@ -1,10 +1,9 @@
 class CreateCharacters < ActiveRecord::Migration[5.2]
   def change
-    create_table :characters, :id => false do |t|
-      t.primary_key :id
+    create_table :characters do |t|
       t.integer :hp
       t.integer :gold
-      t.integer :start_relic
+      t.integer :relic_id
       t.text :description
 
       t.timestamps

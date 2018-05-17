@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails ScrapingTheSpire: production" uuid="88648340-4a57-4b44-ac42-8c63ed3a3dfc">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <first-sync>true</first-sync>
+      <user-name>ScrapingTheSpire</user-name>
+    </data-source>
+    <data-source name="Rails ScrapingTheSpire: test" uuid="89955b68-3b64-4738-8b8b-8e692dbe5471">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <secret-storage>master_key</secret-storage>
+      <first-sync>true</first-sync>
+      <user-name>postgres</user-name>
+    </data-source>
+    <data-source name="Rails ScrapingTheSpire: development" uuid="cd49917b-6305-400c-b486-b8e81550b900">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <first-sync>true</first-sync>
+      <user-name>postgres</user-name>
+    </data-source>
+  </component>
+</project>
