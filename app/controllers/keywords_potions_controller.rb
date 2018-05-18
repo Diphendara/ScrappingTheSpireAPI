@@ -1,0 +1,2 @@
+class KeywordsPotionsController < ApplicationController
+end

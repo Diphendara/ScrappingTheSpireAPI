@@ -1,0 +1,2 @@
+class CardsKeyword < ApplicationRecord
+end

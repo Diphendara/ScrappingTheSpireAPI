@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "cards_keywords", force: :cascade do |t|
+    t.integer "card_id"
+    t.integer "keyword_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "characters", force: :cascade do |t|
     t.integer "hp"
     t.integer "gold"
@@ -63,13 +70,6 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "keywords_cards", force: :cascade do |t|
-    t.integer "card_id"
-    t.integer "keyword_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "keywords_potions", force: :cascade do |t|
     t.integer "potion_id"
     t.integer "keyword_id"
@@ -87,7 +87,6 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
   create_table "potions", force: :cascade do |t|
     t.string "name"
     t.text "effect"
-    t.integer "keyword_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,2 +1,0 @@
-class KeywordCard < ApplicationRecord
-end

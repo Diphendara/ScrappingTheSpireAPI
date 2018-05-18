@@ -1,0 +1,2 @@
+class KeywordsRelicsController < ApplicationController
+end
