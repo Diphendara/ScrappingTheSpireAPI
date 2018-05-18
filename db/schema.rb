@@ -92,25 +92,11 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "potions_keywords", force: :cascade do |t|
-    t.integer "potion_id"
-    t.integer "keyword_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "relics", force: :cascade do |t|
     t.string "name"
     t.integer "rarity"
     t.text "description"
     t.text "lore"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "relics_keywords", force: :cascade do |t|
-    t.integer "relic_id"
-    t.integer "keyword_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
