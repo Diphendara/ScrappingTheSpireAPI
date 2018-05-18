@@ -1,3 +1,3 @@
 class Character < ApplicationRecord
-    has_one :relics
+    belongs_to :relic
 end

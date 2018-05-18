@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_17_180438) do
+ActiveRecord::Schema.define(version: 2018_05_18_105840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "acts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "cards", force: :cascade do |t|
     t.string "energyCost"
@@ -35,25 +41,45 @@ ActiveRecord::Schema.define(version: 2018_05_17_180438) do
   create_table "enemies", force: :cascade do |t|
     t.integer "minHP"
     t.integer "maxHP"
-    t.string "location"
     t.string "appearance"
     t.boolean "isElite"
     t.boolean "isBoss"
+    t.integer "act_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "events", force: :cascade do |t|
-    t.string "location"
+    t.text "description"
+    t.integer "act_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "keywords", force: :cascade do |t|
+    t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "modifiers", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.boolean "isDebuff"
+  create_table "keywords_cards", force: :cascade do |t|
+    t.integer "card_id"
+    t.integer "keyword_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "keywords_potions", force: :cascade do |t|
+    t.integer "potion_id"
+    t.integer "keyword_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "keywords_relics", force: :cascade do |t|
+    t.integer "relic_id"
+    t.integer "keyword_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -61,6 +87,14 @@ ActiveRecord::Schema.define(version: 2018_05_17_180438) do
   create_table "potions", force: :cascade do |t|
     t.string "name"
     t.text "effect"
+    t.integer "keyword_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "potions_keywords", force: :cascade do |t|
+    t.integer "potion_id"
+    t.integer "keyword_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -70,6 +104,13 @@ ActiveRecord::Schema.define(version: 2018_05_17_180438) do
     t.integer "rarity"
     t.text "description"
     t.text "lore"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "relics_keywords", force: :cascade do |t|
+    t.integer "relic_id"
+    t.integer "keyword_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

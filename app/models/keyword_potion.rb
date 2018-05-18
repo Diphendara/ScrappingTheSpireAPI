@@ -1,0 +1,2 @@
+class KeywordPotion < ApplicationRecord
+end

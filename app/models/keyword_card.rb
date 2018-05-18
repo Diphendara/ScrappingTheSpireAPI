@@ -1,0 +1,2 @@
+class KeywordCard < ApplicationRecord
+end

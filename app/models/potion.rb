@@ -1,3 +1,3 @@
 class Potion < ApplicationRecord
-    has_one :modifiers
+    has_and_belongs_to_many :keywords
 end

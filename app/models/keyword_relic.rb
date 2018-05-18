@@ -1,0 +1,2 @@
+class KeywordRelic < ApplicationRecord
+end
