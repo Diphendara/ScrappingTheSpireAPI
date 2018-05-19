@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
 
   create_table "cards", force: :cascade do |t|
     t.string "energyCost"
-    t.string "type"
-    t.string "deck"
+    t.integer "type"
+    t.integer "deck"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

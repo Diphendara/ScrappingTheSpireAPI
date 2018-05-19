@@ -2,8 +2,8 @@ class CreateCards < ActiveRecord::Migration[5.2]
   def change
     create_table :cards do |t|
       t.string :energyCost
-      t.string :type
-      t.string :deck
+      t.integer :type
+      t.integer :deck
 
       t.timestamps
     end
