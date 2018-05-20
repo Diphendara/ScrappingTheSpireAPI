@@ -152,7 +152,7 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   byebug
   database_cleaner
-  factory_bot_rails (~> 4.0)
+  factory_bot_rails (~> 4.8)
   faker
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
