@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
   end
 
   create_table "characters", force: :cascade do |t|
+    t.text "image"
+    t.string "name"
     t.integer "hp"
     t.integer "gold"
     t.integer "relic_id"
@@ -92,6 +94,7 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
   end
 
   create_table "relics", force: :cascade do |t|
+    t.text "image"
     t.string "name"
     t.integer "rarity"
     t.text "description"

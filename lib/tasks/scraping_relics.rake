@@ -20,14 +20,15 @@ task :scraping_relics => :environment do
       item_table_info = item_web.css("table.infoboxtable").search("tr")
       begin
         name = item_table_info[0].text.strip
+        image = item_table_info[1].search("@src")
         rarityCode = rarities[item_table_info[3].search("td")[1].text.strip]
         description = item_table_info[5].text.strip
         lore = item_table_info[7].text.strip
       rescue Exception => ex
         puts ex
       end
-      puts " New record --> Name: #{name} CODE: #{rarityCode} Description: #{description} Lore: #{lore}"
-      Relic.create!(name: name, rarity: rarityCode, description: description, lore: lore)
+      puts " New record --> Name: #{name} CODE: #{rarityCode} image: #{image} Description: #{description} Lore: #{lore}"
+      Relic.create!(image: image, name: name, rarity: rarityCode, description: description, lore: lore)
     rescue Exception => ex
       puts ex
       next
