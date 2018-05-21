@@ -16,7 +16,7 @@ task :scraping_characters => :environment do
       image = table_trs[1].search("@src")
       hp = table_trs[3].search("td")[1].text.strip
       gold = table_trs[4].search("td")[1].text.strip
-      relic_id = Relic.find_by_name(table_trs[5].search("td")[1].text.strip).id
+      relic_id = Relic.find_by_name(table_trs[5].search("td")[1].text.strip).id #Bug in the beta PJ bcs his relic is not in the list of the relics
       description = table_trs[7].text.strip
     rescue Exception => ex
       puts ex
