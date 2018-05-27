@@ -8,9 +8,13 @@ task :scraping_relics => :environment do
   web = "https://slaythespire.gamepedia.com"
   relics_url = "/Category:Relics"
   doc = Nokogiri::HTML(open(web + relics_url))
-  doc.at("table").search("tr").each do |tr|
+
+  doc.css("#mw-pages > div > div > div[@class='mw-category-group']").each do |block|
     begin
-      add_relic(tr, web, rarities)
+      block.search("ul > li").each do |line|
+        url = line.search("@href").text
+        add_relic(url, web, rarities)
+      end
     rescue Exception => ex
       puts "Exception in trying to get data from a row: \n #{ex}"
       puts "Jumps to the next row"
@@ -19,8 +23,7 @@ task :scraping_relics => :environment do
   end
 end
 
-def add_relic(row, web, rarities)
-  item_url = row.search("td")[1].search("@href").text
+def add_relic(item_url, web, rarities)
   item_web = Nokogiri::HTML(open(web + item_url))
   item_table = item_web.css("table.infoboxtable").search("tr")
   begin
@@ -29,10 +32,11 @@ def add_relic(row, web, rarities)
     rarityCode = rarities[item_table[3].search("td")[1].text.strip]
     description = item_table[5].text.strip
     lore = item_table[7].text.strip
-    puts "New record --> Name: #{name} CODE: #{rarityCode} image: #{image} Description: #{description} Lore: #{lore}"
+    #puts "New record --> Name: #{name} CODE: #{rarityCode} image: #{image} Description: #{description} Lore: #{lore}"
     relic = Relic.create!(image: image, name: name, rarity: rarityCode, description: description, lore: lore)
     add_keyword_relics(relic)
   rescue Exception => ex
+    puts item_url
     puts "Exception in trying to get data from a TR: \n #{ex}"
   end
 end
