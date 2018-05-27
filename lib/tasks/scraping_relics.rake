@@ -6,7 +6,7 @@ require "open-uri"
 task :scraping_relics => :environment do
   rarities = {"Starter" => 0, "Common" => 1, "Uncommon" => 2, "Rare" => 3, "Boss" => 4, "Event" => 5, "Shop" => 6}
   web = "https://slaythespire.gamepedia.com"
-  relics_url = "/Relics"
+  relics_url = "/Category:Relics"
   doc = Nokogiri::HTML(open(web + relics_url))
   doc.at("table").search("tr").each do |tr|
     begin
