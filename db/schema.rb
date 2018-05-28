@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
   end
 
   create_table "potions", force: :cascade do |t|
+    t.string "image"
     t.string "name"
     t.text "effect"
     t.datetime "created_at", null: false
