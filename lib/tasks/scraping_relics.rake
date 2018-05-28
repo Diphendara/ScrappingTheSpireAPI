@@ -42,7 +42,9 @@ def add_relic(item_url, web, rarities)
 end
 
 def add_keyword_relics(relic)
-  relic.description.split(" ").each do |word|
+  cleanDescription = relic.description.gsub! ".", ""
+  cleanDescription.downcase!
+  cleanDescription.split(" ").each do |word|
     keyword = Keyword.where("lower(name) like ?", "#{word}").first
     unless keyword.nil?
       KeywordRelic.create!(relic_id: relic.id, keyword_id: keyword.id)

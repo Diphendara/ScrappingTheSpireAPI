@@ -28,12 +28,12 @@ def add_potion(tds)
 end
 
 def add_keyword_potions(potion)
-  cleanEffect = potion.effect.gsub! ".", " "
+  cleanEffect = potion.effect.gsub! ".", ""
   cleanEffect.downcase!
   cleanEffect.split(" ").each do |word|
     keyword = Keyword.where("lower(name) like ?", "#{word}").first
     unless keyword.nil?
-      a = KeywordPotion.create!(potion_id: potion.id, keyword_id: keyword.id)
+      KeywordPotion.create!(potion_id: potion.id, keyword_id: keyword.id)
     end
   end
 end
