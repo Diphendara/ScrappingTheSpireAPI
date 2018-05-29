@@ -22,9 +22,12 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
   end
 
   create_table "cards", force: :cascade do |t|
+    t.string "image"
     t.string "energyCost"
-    t.integer "type"
+    t.string "name"
+    t.integer "category"
     t.integer "deck"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
