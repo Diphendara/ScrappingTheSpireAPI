@@ -31,8 +31,14 @@ keywords = Keyword.create([
   {name: "Dazed", description: "Dazed are Unplayable status cards."},
 ])
 
-#Special cases
+#Special cases cars
 cards = Card.create([
   {image: "https://d1u5p3l4wpay3k.cloudfront.net/slaythespire_gamepedia_en/0/0a/Defend.png?version=a02d3db0019a2e730d7853d6be5039ec", energyCost: 1, name: "Defend", category: 1, deck: 1, description: "Gain 5(8) Block."},
   {image: "https://d1u5p3l4wpay3k.cloudfront.net/slaythespire_gamepedia_en/2/29/Bite.png?version=7bdaa0a62af97edd9bd21731cf33a4a2", energyCost: 1, name: "Bite", category: 0, deck: 3, description: "Deal 7 (8) damage. Heal 2 (3) HP."},
+])
+
+acts = Act.create([
+  {name: "Act 1: The Exordium"},
+  {name: "Act 2: The City"},
+  {name: "Act 3: The Beyond"},
 ])
