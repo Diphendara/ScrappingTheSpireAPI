@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
   end
 
   create_table "events", force: :cascade do |t|
+    t.text "name"
     t.text "description"
     t.integer "act_id"
     t.datetime "created_at", null: false
