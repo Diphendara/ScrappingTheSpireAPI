@@ -7,6 +7,7 @@ task :scraping_potions => :environment do
   web = "https://slaythespire.gamepedia.com"
   potions_url = "/Potions"
   doc = Nokogiri::HTML(open(web + potions_url))
+  @newImputs = []
 
   table = doc.at("table").search("tr").each do |tr|
     begin
@@ -16,10 +17,11 @@ task :scraping_potions => :environment do
       puts "Jumps to the next row"
       next
     rescue NoMethodError => ex
-      puts "Exception in get the TD of the table.\n #{ex}"
+      puts "Exception in get the TD of the table. This is a normal exception.\n #{ex} \n"
       next
     end
   end
+  printNewRecords
 end
 
 def add_potion(tds)
@@ -29,6 +31,7 @@ def add_potion(tds)
   begin
     potion = Potion.create!(image: image, name: name, effect: effect)
     add_keyword_potions(potion)
+    @newImputs << potion
   rescue ActiveRecord::RecordInvalid => ex
     puts "Exception in trying to create new Potion.\n #{ex}"
   rescue NoMethodError => ex
@@ -48,5 +51,12 @@ def add_keyword_potions(potion)
     end
   rescue ActiveRecord::RecordInvalid => ex
     puts "Exception in trying to create keyword relation with #{potion.name}:\n #{ex}"
+  end
+end
+
+def printNewRecords
+  puts "New records added:"
+  @newImputs.each do |input|
+    puts input.name
   end
 end

@@ -9,6 +9,7 @@ task :scraping_cards => :environment do
   web = "https://slaythespire.gamepedia.com"
   cards_url = "/Category:Cards"
   doc = Nokogiri::HTML(open(web + cards_url))
+  @newImputs = []
 
   doc.css("#mw-pages > div > div > div[@class='mw-category-group']").each do |block|
     begin
@@ -21,6 +22,7 @@ task :scraping_cards => :environment do
       next
     end
   end
+  printNewRecords
 end
 
 def add_card(item_url, web, categories, decks)
@@ -44,6 +46,7 @@ def add_card(item_url, web, categories, decks)
       description = item_table[7].text.strip
     end
     card = Card.create!(image: image, energyCost: energy, name: name, category: category, deck: deck, description: description)
+    @newImputs << card
     add_cards_keywords(card)
   rescue ActiveRecord::RecordInvalid => ex
     puts web + item_url
@@ -65,5 +68,12 @@ def add_cards_keywords(card)
     end
   rescue ActiveRecord::RecordInvalid => ex
     puts "Exception in trying to create keyword relation with #{card.name}:\n #{ex}"
+  end
+end
+
+def printNewRecords
+  puts "New records added:"
+  @newImputs.each do |input|
+    puts input.name
   end
 end

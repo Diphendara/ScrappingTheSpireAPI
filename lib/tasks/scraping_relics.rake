@@ -8,6 +8,7 @@ task :scraping_relics => :environment do
   web = "https://slaythespire.gamepedia.com"
   relics_url = "/Category:Relics"
   doc = Nokogiri::HTML(open(web + relics_url))
+  @newImputs = []
 
   doc.css("#mw-pages > div > div > div[@class='mw-category-group']").each do |block|
     begin
@@ -21,6 +22,7 @@ task :scraping_relics => :environment do
       next
     end
   end
+  printNewRecords
 end
 
 def add_relic(item_url, web, rarities)
@@ -34,6 +36,7 @@ def add_relic(item_url, web, rarities)
     lore = item_table[7].text.strip
 
     relic = Relic.create!(image: image, name: name, rarity: rarityCode, description: description, lore: lore)
+    @newImputs << relic
     add_keyword_relics(relic)
   rescue ActiveRecord::RecordInvalid => ex
     puts web + item_url
@@ -55,5 +58,12 @@ def add_keyword_relics(relic)
     end
   rescue ActiveRecord::RecordInvalid => ex
     puts "Exception in trying to create keyword relation with #{relic.name}:\n #{ex}"
+  end
+end
+
+def printNewRecords
+  puts "New records added:"
+  @newImputs.each do |input|
+    puts input.name
   end
 end

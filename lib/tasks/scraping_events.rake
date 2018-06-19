@@ -7,6 +7,8 @@ task :scraping_events => :environment do
   web = "https://slaythespire.gamepedia.com"
   events_urls = ["/Category:Act_1_Events", "/Category:Act_2_Events", "/Category:Act_3_Events"]
   id_act = 1
+  @newImputs = []
+
   events_urls.each do |event_web|
     begin
       doc = Nokogiri::HTML(open(web + event_web))
@@ -17,6 +19,7 @@ task :scraping_events => :environment do
       next
     end
   end
+  printNewRecords
 end
 
 def search_events(doc, web, id_act)
@@ -42,8 +45,16 @@ def add_event(event_page, id_act)
   end
 
   begin
-    Event.create!(name: name, description: description, act_id: id_act)
+    event = Event.create!(name: name, description: description, act_id: id_act)
+    @newImputs << event
   rescue ActiveRecord::RecordInvalid => ex
     puts "Exception in create a new event.\n #{ex}"
+  end
+end
+
+def printNewRecords
+  puts "New records added:"
+  @newImputs.each do |input|
+    puts input.name
   end
 end
