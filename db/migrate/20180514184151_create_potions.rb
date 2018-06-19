@@ -4,6 +4,7 @@ class CreatePotions < ActiveRecord::Migration[5.2]
       t.string :image
       t.string :name
       t.text :effect
+
       t.timestamps
     end
   end

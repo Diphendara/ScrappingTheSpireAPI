@@ -1,7 +1,6 @@
 FactoryBot.define do
-    factory :keyword do
-      name { Faker::Lorem.word }
-      description { Faker::Friends.quote }
-
-    end
+  factory :keyword do
+    description { Faker::Friends.quote }
+    name { Faker::Lorem.word }
   end
+end

@@ -1,6 +1,7 @@
 FactoryBot.define do
-    factory :potion do
-      name { Faker::Lorem.word }
-      effect {Faker::NewGirl.quote}
-    end
+  factory :potion do
+    effect { Faker::NewGirl.quote }
+    image { Faker::Internet.url }
+    name { Faker::Lorem.word }
   end
+end

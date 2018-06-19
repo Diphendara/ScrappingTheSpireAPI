@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :event do
+    act_id { Faker::Number.between(0, 2) }
     description { Faker::Lorem.word }
-    act_id { Faker::Number.number(1) }
+    name { Faker::Lorem.word }
   end
 end

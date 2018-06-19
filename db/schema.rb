@@ -22,12 +22,12 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
   end
 
   create_table "cards", force: :cascade do |t|
-    t.string "image"
-    t.string "energyCost"
-    t.string "name"
     t.integer "category"
     t.integer "deck"
     t.string "description"
+    t.string "energyCost"
+    t.string "image"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,34 +51,36 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
   end
 
   create_table "enemies", force: :cascade do |t|
-    t.integer "minHP"
-    t.integer "maxHP"
-    t.string "appearance"
-    t.boolean "isElite"
     t.boolean "isBoss"
+    t.boolean "isElite"
     t.integer "act_id"
+    t.integer "maxHP"
+    t.integer "minHP"
+    t.string "description"
+    t.string "image"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "events", force: :cascade do |t|
-    t.text "name"
-    t.text "description"
     t.integer "act_id"
+    t.text "description"
+    t.text "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "keyword_potions", force: :cascade do |t|
-    t.integer "potion_id"
     t.integer "keyword_id"
+    t.integer "potion_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "keyword_relics", force: :cascade do |t|
-    t.integer "relic_id"
     t.integer "keyword_id"
+    t.integer "relic_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -99,10 +101,10 @@ ActiveRecord::Schema.define(version: 2018_05_18_105840) do
   end
 
   create_table "relics", force: :cascade do |t|
-    t.text "image"
-    t.string "name"
     t.integer "rarity"
+    t.string "name"
     t.text "description"
+    t.text "image"
     t.text "lore"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
