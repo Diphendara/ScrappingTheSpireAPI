@@ -5,5 +5,6 @@ class Card < ApplicationRecord
   has_and_belongs_to_many :keywords
 
   #validations
+  validates :name, uniqueness: {scope: :deck, message: "The card should be unique for each deck"}
   validates_presence_of :image, :energyCost, :name, :category, :deck, :description
 end

@@ -1,8 +1,9 @@
 class Keyword < ApplicationRecord
-    has_and_belongs_to_many :potions    
-    has_and_belongs_to_many :relics
-    has_and_belongs_to_many :cards
+  has_and_belongs_to_many :potions
+  has_and_belongs_to_many :relics
+  has_and_belongs_to_many :cards
 
-    # validations
-    validates_presence_of :name, :description
+  # validations
+  validates :name, uniqueness: true
+  validates_presence_of :name, :description
 end
