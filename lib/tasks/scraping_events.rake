@@ -8,9 +8,14 @@ task :scraping_events => :environment do
   events_urls = ["/Category:Act_1_Events", "/Category:Act_2_Events", "/Category:Act_3_Events"]
   id_act = 1
   events_urls.each do |event_web|
-    doc = Nokogiri::HTML(open(web + event_web))
-    search_events(doc, web, id_act)
-    id_act += 1
+    begin
+      doc = Nokogiri::HTML(open(web + event_web))
+      search_events(doc, web, id_act)
+      id_act += 1
+    rescue OpenURI::HTTPError => ex
+      puts "Exception in try to enter in #{web + event_web}.\n #{ex}"
+      next
+    end
   end
 end
 
@@ -19,23 +24,26 @@ def search_events(doc, web, id_act)
     begin
       block.search("ul > li").each do |line|
         url = line.search("@href").text
-        add_event(url, web, id_act)
+        event_page = Nokogiri::HTML(open(web + url))
+        add_event(event_page, id_act)
       end
-    rescue Exception => ex
-      puts "Exception in trying to get data from a row: \n #{ex}"
-      puts "Jumps to the next row"
+    rescue OpenURI::HTTPError => ex
+      puts "Exception in try to enter in #{web + url}.\n #{ex}"
       next
     end
   end
 end
 
-def add_event(url, web, id_act)
-  item_web = Nokogiri::HTML(open(web + url))
-  name = item_web.css("#firstHeading").text
+def add_event(event_page, id_act)
+  name = event_page.css("#firstHeading").text
   description = ""
-  item_web.css("#mw-content-text > ul > li").each do |option|
+  event_page.css("#mw-content-text > ul > li").each do |option|
     description += option.text + "\n"
   end
-  #puts "Name: #{name}\nDescription:#{description}"
-  event = Event.create!(name: name, description: description, act_id: id_act)
+
+  begin
+    Event.create!(name: name, description: description, act_id: id_act)
+  rescue ActiveRecord::RecordInvalid => ex
+    puts "Exception in create a new event.\n #{ex}"
+  end
 end

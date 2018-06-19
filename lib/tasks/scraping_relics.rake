@@ -15,8 +15,8 @@ task :scraping_relics => :environment do
         url = line.search("@href").text
         add_relic(url, web, rarities)
       end
-    rescue Exception => ex
-      puts "Exception in trying to get data from a row: \n #{ex}"
+    rescue OpenURI::HTTPError => ex
+      puts "Exception in trying to get a URL from a item.\n #{ex}"
       puts "Jumps to the next row"
       next
     end
@@ -32,22 +32,28 @@ def add_relic(item_url, web, rarities)
     rarityCode = rarities[item_table[3].search("td")[1].text.strip]
     description = item_table[5].text.strip
     lore = item_table[7].text.strip
-    #puts "New record --> Name: #{name} CODE: #{rarityCode} image: #{image} Description: #{description} Lore: #{lore}"
+
     relic = Relic.create!(image: image, name: name, rarity: rarityCode, description: description, lore: lore)
     add_keyword_relics(relic)
-  rescue Exception => ex
-    puts item_url
-    puts "Exception in trying to get data from a TR: \n #{ex}"
+  rescue ActiveRecord::RecordInvalid => ex
+    puts web + item_url
+    puts "Exception in trying to insert a new Relic #{item_url}:\n #{ex}"
+  rescue NoMethodError => ex
+    puts "Exception in get info from table for the Relic #{item_url}:\n #{ex}"
   end
 end
 
 def add_keyword_relics(relic)
   cleanDescription = relic.description.gsub! ".", ""
   cleanDescription.downcase!
-  cleanDescription.split(" ").each do |word|
-    keyword = Keyword.where("lower(name) like ?", "#{word}").first
-    unless keyword.nil?
-      KeywordRelic.create!(relic_id: relic.id, keyword_id: keyword.id)
+  begin
+    cleanDescription.split(" ").each do |word|
+      keyword = Keyword.where("lower(name) like ?", "#{word}").first
+      unless keyword.nil?
+        KeywordRelic.create!(relic_id: relic.id, keyword_id: keyword.id)
+      end
     end
+  rescue ActiveRecord::RecordInvalid => ex
+    puts "Exception in trying to create keyword relation with #{relic.name}:\n #{ex}"
   end
 end

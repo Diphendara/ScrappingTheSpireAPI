@@ -16,9 +16,8 @@ task :scraping_cards => :environment do
         url = line.search("@href").text
         add_card(url, web, categories, decks)
       end
-    rescue Exception => ex
-      puts "Exception in trying to get data from a row: \n #{ex}"
-      puts "Jumps to the next row"
+    rescue OpenURI::HTTPError => ex
+      puts "Exception in try to enter in #{web + url}.\n #{ex}"
       next
     end
   end
@@ -46,18 +45,25 @@ def add_card(item_url, web, categories, decks)
     end
     card = Card.create!(image: image, energyCost: energy, name: name, category: category, deck: deck, description: description)
     add_cards_keywords(card)
-  rescue Exception => ex
-    puts "Exception, special case in #{item_url} : \n #{ex}"
+  rescue ActiveRecord::RecordInvalid => ex
+    puts web + item_url
+    puts "Exception, special case in create card for #{item_url} :\n #{ex}"
+  rescue NoMethodError => ex
+    puts "Exception in trying to insert this Card --> #{item_url} in the database.\n #{ex}"
   end
 end
 
 def add_cards_keywords(card)
   cleanDescription = card.description.gsub! ".", ""
   cleanDescription.downcase!
-  cleanDescription.split(" ").each do |word|
-    keyword = Keyword.where("lower(name) like ?", "#{word}").first
-    unless keyword.nil?
-      CardsKeyword.create!(card_id: card.id, keyword_id: keyword.id)
+  begin
+    cleanDescription.split(" ").each do |word|
+      keyword = Keyword.where("lower(name) like ?", "#{word}").first
+      unless keyword.nil?
+        CardsKeyword.create!(card_id: card.id, keyword_id: keyword.id)
+      end
     end
+  rescue ActiveRecord::RecordInvalid => ex
+    puts "Exception in trying to create keyword relation with #{card.name}:\n #{ex}"
   end
 end
